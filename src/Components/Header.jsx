@@ -1,9 +1,10 @@
 import { FaBars, FaIndustry, FaTimes } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Header() {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisiable, setIsVisiable] = useState(true);
 
 
   const Menu = [
@@ -34,6 +35,22 @@ function Header() {
     },
   ];
 
+
+  // Show and Hide BackGround DIV funtion
+  function handleResize() {
+    if (window.innerWidth < 1050) {
+      setIsVisiable(false)
+    } else {
+      setIsVisiable(true)
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    window.removeEventListener('resize', handleResize)
+  })
+
   return (
     <>
       {/* Header */}
@@ -52,9 +69,13 @@ function Header() {
         <nav className="hidden md:flex ">
 
           {/* {background Pattern} */}
-          <div className='w-[460px] h-[600px] bg-[#e6e6e5] -top-1/2 absolute right-0'></div> 
-          
-          
+          {
+            isVisiable && (
+              <div className='w-[460px] h-[600px] bg-[#e6e6e5] -top-1/2 absolute right-0'></div>
+            )
+          }
+
+
           <div className="flex justify-center">
             <ul className="sm:flex items-center py-2 gap-1 hidden z-20">
               {Menu.map((data) => (
